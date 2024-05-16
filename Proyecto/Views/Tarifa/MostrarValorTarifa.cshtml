@@ -1,0 +1,19 @@
+﻿@model decimal
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valor de Tarifa</title>
+</head>
+<body>
+    <h2>Valor de la Tarifa para @ViewBag.Tipo</h2>
+    @if (ViewBag.ValorTarifa != null)
+    {
+        <p>El valor de la tarifa es: @ViewBag.ValorTarifa</p>
+    }
+    else
+    {
+        <p>El valor de la tarifa no está disponible.</p>
+    }
+</body>
+</html>

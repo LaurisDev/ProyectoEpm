@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EPMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estrato" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientesFactura">
+          <Key>
+            <PropertyRef Name="id_Factura" />
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="id_Factura" Type="int" Nullable="false" />
+          <Property Name="Cedula" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConsumoAgua">
+          <Key>
+            <PropertyRef Name="id_ConsumoAgua" />
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="id_ConsumoAgua" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="int" Nullable="false" />
+          <Property Name="PromedioConsumoAgua" Type="int" Nullable="false" />
+          <Property Name="ConsumoActualAgua" Type="int" Nullable="false" />
+          <Property Name="PeriodoConsumo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConsumoEnergia">
+          <Key>
+            <PropertyRef Name="id_ConsumoEnergia" />
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="id_ConsumoEnergia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="int" Nullable="false" />
+          <Property Name="MetaAhorroEnergia" Type="int" Nullable="false" />
+          <Property Name="ConsumoActualEnergia" Type="int" Nullable="false" />
+          <Property Name="PeriodoConsumo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="id_Factura" />
+          </Key>
+          <Property Name="id_Factura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ValorPagar" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tarifa">
+          <Key>
+            <PropertyRef Name="id_tarifa" />
+          </Key>
+          <Property Name="id_tarifa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Valor" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ClientesFactura_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="ClientesFactura" Type="Self.ClientesFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ClientesFactura">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientesFactura_Factura">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="ClientesFactura" Type="Self.ClientesFactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="id_Factura" />
+            </Principal>
+            <Dependent Role="ClientesFactura">
+              <PropertyRef Name="id_Factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConsumoAgua_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="ConsumoAgua" Type="Self.ConsumoAgua" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ConsumoAgua">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConsumoEnergia_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="ConsumoEnergia" Type="Self.ConsumoEnergia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ConsumoEnergia">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EPMModelStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientesFactura" EntityType="Self.ClientesFactura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsumoAgua" EntityType="Self.ConsumoAgua" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsumoEnergia" EntityType="Self.ConsumoEnergia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarifa" EntityType="Self.Tarifa" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ClientesFactura_Clientes" Association="Self.FK_ClientesFactura_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ClientesFactura" EntitySet="ClientesFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientesFactura_Factura" Association="Self.FK_ClientesFactura_Factura">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="ClientesFactura" EntitySet="ClientesFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConsumoAgua_Clientes" Association="Self.FK_ConsumoAgua_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ConsumoAgua" EntitySet="ConsumoAgua" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConsumoEnergia_Clientes" Association="Self.FK_ConsumoEnergia_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ConsumoEnergia" EntitySet="ConsumoEnergia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EPMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Estrato" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ConsumoAgua" Relationship="Self.FK_ConsumoAgua_Clientes" FromRole="Clientes" ToRole="ConsumoAgua" />
+          <NavigationProperty Name="ConsumoEnergia" Relationship="Self.FK_ConsumoEnergia_Clientes" FromRole="Clientes" ToRole="ConsumoEnergia" />
+          <NavigationProperty Name="Factura" Relationship="Self.ClientesFactura" FromRole="Clientes" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="ConsumoAgua">
+          <Key>
+            <PropertyRef Name="id_ConsumoAgua" />
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="id_ConsumoAgua" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="Int32" Nullable="false" />
+          <Property Name="PromedioConsumoAgua" Type="Int32" Nullable="false" />
+          <Property Name="ConsumoActualAgua" Type="Int32" Nullable="false" />
+          <Property Name="PeriodoConsumo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_ConsumoAgua_Clientes" FromRole="ConsumoAgua" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="ConsumoEnergia">
+          <Key>
+            <PropertyRef Name="id_ConsumoEnergia" />
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="id_ConsumoEnergia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="Int32" Nullable="false" />
+          <Property Name="MetaAhorroEnergia" Type="Int32" Nullable="false" />
+          <Property Name="ConsumoActualEnergia" Type="Int32" Nullable="false" />
+          <Property Name="PeriodoConsumo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_ConsumoEnergia_Clientes" FromRole="ConsumoEnergia" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="id_Factura" />
+          </Key>
+          <Property Name="id_Factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValorPagar" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.ClientesFactura" FromRole="Factura" ToRole="Clientes" />
+        </EntityType>
+        <EntityType Name="Tarifa">
+          <Key>
+            <PropertyRef Name="id_tarifa" />
+          </Key>
+          <Property Name="id_tarifa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ConsumoAgua_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="ConsumoAgua" Type="Self.ConsumoAgua" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ConsumoAgua">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConsumoEnergia_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="ConsumoEnergia" Type="Self.ConsumoEnergia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Cedula" />
+            </Principal>
+            <Dependent Role="ConsumoEnergia">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ClientesFactura">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="EPMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+          <EntitySet Name="ConsumoAgua" EntityType="Self.ConsumoAgua" />
+          <EntitySet Name="ConsumoEnergia" EntityType="Self.ConsumoEnergia" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="Tarifa" EntityType="Self.Tarifa" />
+          <AssociationSet Name="FK_ConsumoAgua_Clientes" Association="Self.FK_ConsumoAgua_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ConsumoAgua" EntitySet="ConsumoAgua" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConsumoEnergia_Clientes" Association="Self.FK_ConsumoEnergia_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ConsumoEnergia" EntitySet="ConsumoEnergia" />
+          </AssociationSet>
+          <AssociationSet Name="ClientesFactura" Association="Self.ClientesFactura">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EPMModelStoreContainer" CdmEntityContainer="EPMEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="EPMModel.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Estrato" ColumnName="Estrato" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsumoAgua">
+            <EntityTypeMapping TypeName="EPMModel.ConsumoAgua">
+              <MappingFragment StoreEntitySet="ConsumoAgua">
+                <ScalarProperty Name="id_ConsumoAgua" ColumnName="id_ConsumoAgua" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="PromedioConsumoAgua" ColumnName="PromedioConsumoAgua" />
+                <ScalarProperty Name="ConsumoActualAgua" ColumnName="ConsumoActualAgua" />
+                <ScalarProperty Name="PeriodoConsumo" ColumnName="PeriodoConsumo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsumoEnergia">
+            <EntityTypeMapping TypeName="EPMModel.ConsumoEnergia">
+              <MappingFragment StoreEntitySet="ConsumoEnergia">
+                <ScalarProperty Name="id_ConsumoEnergia" ColumnName="id_ConsumoEnergia" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="MetaAhorroEnergia" ColumnName="MetaAhorroEnergia" />
+                <ScalarProperty Name="ConsumoActualEnergia" ColumnName="ConsumoActualEnergia" />
+                <ScalarProperty Name="PeriodoConsumo" ColumnName="PeriodoConsumo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="EPMModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="id_Factura" ColumnName="id_Factura" />
+                <ScalarProperty Name="ValorPagar" ColumnName="ValorPagar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarifa">
+            <EntityTypeMapping TypeName="EPMModel.Tarifa">
+              <MappingFragment StoreEntitySet="Tarifa">
+                <ScalarProperty Name="id_tarifa" ColumnName="id_tarifa" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ClientesFactura" TypeName="EPMModel.ClientesFactura" StoreEntitySet="ClientesFactura">
+            <EndProperty Name="Clientes">
+              <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+            </EndProperty>
+            <EndProperty Name="Factura">
+              <ScalarProperty Name="id_Factura" ColumnName="id_Factura" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

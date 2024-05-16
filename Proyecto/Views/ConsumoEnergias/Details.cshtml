@@ -1,0 +1,50 @@
+﻿@model Proyecto.ConsumoEnergia
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ConsumoEnergia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaAhorroEnergia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaAhorroEnergia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConsumoActualEnergia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConsumoActualEnergia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodoConsumo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodoConsumo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clientes.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clientes.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
